@@ -1,0 +1,29 @@
+
+<nav class="navbar">
+    <input type="text" 
+    class="form-control"
+    name="tool_id"
+    [(ngModel)]="tool_id"
+    placeholder="Suche nach Werkzeugname"
+    >
+</nav>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th [appSort]="machines" data-order="desc" data-name="tool_id">Werkzeugname <i class="fa fa-sort"></i></th>
+            <th [appSort]="machines" data-order="desc" data-name="count">Anzahl der Einsätze <i class="fa fa-sort"></i></th>
+            <th [appSort]="machines" data-order="desc" data-name="time">Einsatzzeit <i class="fa fa-sort"></i></th>
+            <th >Spannpositionen der Werkzeuge </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let machine of machines | filter :tool_id | paginate: { itemsPerPage: 15, currentPage: p }">
+            <td>{{machine.tool_id}}</td>
+            <td>{{machine.count}}</td>
+            <td>{{toHour(machine.time)}}</td>
+            <td>min: {{machine.cposmin}} - max: {{machine.cposmax}}
+            </td>
+        </tr>
+    </tbody>
+</table>
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
